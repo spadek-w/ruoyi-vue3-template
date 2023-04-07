@@ -1,0 +1,26 @@
+stages: # 指定CI/CD的执行阶段
+  - build
+  - test
+  - deploy
+
+cache: # 指定缓存依赖文件的路径
+  key: modules-cache
+  paths:
+    - node_modules/
+
+before_script: # 指定执行构建、测试和部署之前的脚本
+  - pnpm install
+zm_install:
+  stage: install # 这里代表我们当前的任务处于install阶段
+  script: # 每个任务都必须有script，顾名思义就是执行的语句
+    - pnpm install # 前面说的我们处于一个有node环境的虚拟机，那这句话就是在这个虚拟机的我
+build: # 构建阶段
+  stage: build # 指定阶段名称
+  script:
+    - npm run build # 执行构建命令
+
+test: # 测试阶段
+  stage: test
+  script:
+    - npm run test # 执行测试命令
+
